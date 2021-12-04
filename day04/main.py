@@ -3,7 +3,6 @@ from collections import Counter
 def read_input():
     with open('input' , 'r') as f:
         inp = f.read()
-    breakpoint()
     out = parse(inp)
 
     return out
@@ -46,13 +45,17 @@ def main():
     inp = read_input()
     orders = inp['order']
     boards = inp['boards']
-    m_board = [[0 for i in range(25)] for j in range(len(boards))]
+    m_boards = [[0 for i in range(25)] for j in range(len(boards))]
+    F = boards.copy()
 
     for num in orders:
-        for i, board in enumerate(boards):
-            if num in board:
-               m_board[i][board.index(num)] = 1
-            if is_bingo(m_board[i]):
-                print(f"{i}-yes")
-            else:
-                print('no')
+        for i, _ in enumerate(boards):
+            if num in boards[i]:
+               m_boards[i][boards[i].index(num)] = 1
+            if is_bingo(m_boards[i]) and boards[i] in F:
+                um = [boards[i][j] for j in range(25) if m_boards[i][j] == 0]
+                print(sum(um)*num)
+                F.remove(boards[i])
+                print(i, 'won at', num)
+
+

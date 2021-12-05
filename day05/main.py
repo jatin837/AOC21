@@ -1,11 +1,10 @@
 import sys
 from collections import Counter
 
-inp = sys.stdin
 
 fq = Counter()
 
-for line in inp:
+for line in sys.stdin:
     start, end = line.split('->')
     x1, y1 = tuple(map(int,start.split(',')))
     x2, y2 = tuple(map(int,end.split(',')))

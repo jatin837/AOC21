@@ -23,6 +23,25 @@ for line in inp:
         for i in range(a, b+1):
             fq[(i, y1)] += 1
 
+    if x2-x1 == y2-y1:
+        a = min(x1, x2)
+        b = max(x1, x2)
+        c = min(y1, y2)
+        d = max(y1, y2)
+
+        for i in range(b - a + 1):
+            fq[(a+i, c+i)] += 1
+
+    if x2-x1 == -(y2-y1):
+        a = min(x1, x2)
+        b = max(x1, x2)
+        c = min(y1, y2)
+        d = max(y1, y2)
+
+        for i in range(b - a + 1):
+            fq[(a+i, d-i)] += 1
+
+
 ans = 0
 
 for k in list(fq.keys()):

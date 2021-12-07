@@ -1,5 +1,7 @@
 from collections import Counter
 
+c = Counter()
+
 nums = list(map(int, input().split(',')))
 
 nums.sort()
@@ -13,16 +15,23 @@ for num in nums:
 
 # print(ans1)
 
-ans2 = 10e5
-n = 0
 
-for i in range(len(nums)):
+res = []
+m = max(nums)
+for i in range(m+1):
+    print("-"*10)
+    n = 0
     temp = 0
     for j in range(len(nums)):
-        if i != j:
-            n = abs(nums[i] - nums[j])
-            temp += int(n*(n+1)/2)
-    ans2 = min(ans2, temp)
-    print(i, ans2)
+        n = abs(i - nums[j])
+        print(int(0.5*n*(n+1)))
+        temp += int(0.5*(n)*(n+1))
 
-#print(ans2)
+    res.append(temp)
+
+print(res)
+
+print(min(res))
+            
+
+    

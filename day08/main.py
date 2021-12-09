@@ -1,68 +1,79 @@
 import sys
-from sol import parse
+#from sol import parse
+from itertools import permutations
 
-pattern, output = list(), list()
+o_segments = ["abcefg", "cf", "acdeg", "acdfg", "bcdf", "abdfg", "abdefg", "acf", "abcdefg", "abcdfg"]
+posn = []
+for w in o_segments:
+    temp = []
+    for c in w:
+        temp.append(int(ord(c) - ord('a')))
+    posn.append(temp)
 
-res1 = 0
-res2 = 0
-for line in sys.stdin:
+def solve():
+    ans = 0
+    d = ['' for i in range(7)]
     A, B = list(map(lambda x : x.split(), line.split('|')))
-    pattern.append(A)
-    output.append(B)
-    n = parse_pattern(A)
 
-    p = parse(A)
+    for i, a in enumerate(A):
+        A[i] = ''.join(sorted(a))
 
-    for o in B:
-        if len(o) in [2, 3, 4, 7]:
-            res1 += 1
+    for i, b in enumerate(B):
+        B[i] = ''.join(sorted(b))
 
+    for perm in permutations('abcdefg'):
+        ok = True
+        for i,c in enumerate(perm):
+            d[i] = c
 
-def parse_pattern(A):
-    A.sort(key=len)
-    out = [-1 for i in range(10)] 
-    out[1] = A[0]
-    out[7] = A[1]
-    out[4] = A[2]
-    out[8] = A[9]
+        new = [[d[i] for i in pos] for pos in posn]
 
-    cf = A[0]
-    a = ''
-    for c in A[1]:
-        if c not in A[0]:
-            a = c
-            break
-
-    bd = ''
-    for c in A[2]:
-        if c not in A[1]:
-            bd += c
+        for i, p in enumerate(new):
+            new[i]="".join(sorted(p))
 
 
-    eg = ''
-    for c in A[9]:
-        if c not in set(A[1] + A[9])
-        eg += c
-    
-
-    for i in A[6:9]:
-        if (eg[0] or eg[1]) not in i:
-            out[6] = i
-            break
-
-    for i in A[6:9]:
-        if (cf[0] or cf[1]) not in i:
-            out[9] = i
-            break
+        for p in new:
+            if p not in A:
+                ok = False
+            
+        if ok:
+            print('GOT')
+            print(d)
+            
+            ndig = []
+            for dig in B:
+                ndig.append(list(map(lambda x: d.index(x), dig)))
 
 
+            print(ndig)
+            res = []
+            for dig in ndig:
+                res.append("".join([chr(ord('a')+i) for i in dig]))
+
+            for i in range(len(res)):
+                res[i] = "".join(sorted(res[i]))
+
+            ans += 1000*o_segments.index((res[0])) + 100*o_segments.index((res[1])) + 10*o_segments.index((res[2])) + o_segments.index((res[3]))
+
+            print(res)
+            print(ans)
+
+    return ans
+        
+
+
+ans = 0
+for line in sys.stdin:
+    ans += solve()
+
+print(ans)
 
 
 
+#print(res)
 
-assert len(pattern) == len(output)
-assert len(pattern[0]) == 10
-assert len(output[0]) == 4
+
+
 
 # 1 => 2 segments
 # 7 => 3 segments
@@ -73,7 +84,3 @@ assert len(output[0]) == 4
 # 0, 6, 9 => 6 segments
 
 
-o_segments = ["abcefg", "cf", "acdeg", "acdfg", "bcdf", "abdfg", "abdefg", "acf", "abcdefg", "abcdfg"]
-
-print(pattern, output)
-print(res1)

@@ -18,17 +18,17 @@ def parse(p):
     res[7] = p[1]
 
     for i in p[6:9]:
-        if (eg[0] or eg[1]) not i:
+        if eg[0] not in i or eg[1] not in i:
             res[9] = i
             break
 
     for i in p[6:9]:
-        if (bd[0] or bd[1]) not i:
+        if bd[0] not in i or bd[1] not in i:
             res[0] = i
             break
 
     for i in p[6:9]:
-        if (cf[0] or cf[1]) not i:
+        if cf[0] not in i or cf[1] not in i:
             res[6] = i
             break
 
@@ -39,13 +39,15 @@ def parse(p):
                 break
 
     for i in p[3:6]:
-        if (cf[0] and cf[1]) in i:
+        if cf[0] and cf[1] in i:
             res[3] = i
 
     for i in p[3:6]:
-        if (eg[0] or eg[1]) not in i and res[i] == -1:
+        if eg[0] not in i or eg[1] not in i and res[res.index(i)] == -1:
             res[5] = i
 
+    res = list(map(lambda i : ''.join(sorted(i)), res))
+    print(set(res))
     return res
 
 

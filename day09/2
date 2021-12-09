@@ -1,0 +1,18 @@
+import sys
+
+caves = []
+for i in sys.stdin:
+    caves.append(i.strip())
+
+
+for i in range(len(caves)):
+    for j in range(len(caves[0][0])):
+        if i == 0 and j == 0:
+            pass
+        if i == 0 and j == len(caves[0][0])-1:
+            pass
+        if i == len(caves) - 1 and j == 0:
+            pass
+        if i == len(caves) - 1 and j == len(caves[0][0]) - 1:
+            pass
+

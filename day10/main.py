@@ -2,7 +2,9 @@ import sys
 from collections import Counter, deque
 
 d = {
-    "[" : "]", "<" : ">", "{" : "}",
+    "[" : "]", 
+    "<" : ">",
+    "{" : "}",
     "(" : ")",
 }
 
@@ -23,11 +25,9 @@ val2= {
 ans = 0
 scores = []
 for line in sys.stdin:
-    co = Counter()
     stack = []
     ill = ''
     for ch in line.strip():
-        co[ch] += 1
         if ch in d.keys():
             stack.append(ch)
         if ch in d.values() and ch != d[stack[-1]]:
@@ -36,23 +36,18 @@ for line in sys.stdin:
         if ch in d.values() and ch == d[stack[-1]]:
             stack.pop()
             
-    temp = 1
     if ill == '':
         stack.reverse()
         score = 0
-        print('line', line)
-        print('stack',stack)
         for ch in stack:
             score = 5*score + val2[d[ch]]
         scores.append(score)
 
 
-    #print(ans2)
 
 
     ans += val[ill]
 
-#print(ans)
 
 scores.sort()
 print(scores[len(scores)//2])

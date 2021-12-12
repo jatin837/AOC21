@@ -12,23 +12,25 @@ for start, end in inp:
     G[end].append(start)
 
 
-#   visited = []
-#   def count(node):
-#       global ans
-#       global visited
-#       
-#       if node == 'end':
-#           ans += 1
+def count(node, visited=[]):
+    global ans
+    visited.append(node)
 
-#       else:
-#           for n in G[node]:
-#               if n not in visited:
-#                   print(node + n)
-#                   visited.append(n)
-#                   count(n)
+    if node == 'end':
+        ans += 1
 
-#   for i in G['start']:
-#   count(i)
+    else:
+        for n in G[node]:
+            if n not in visited:
+                count(n, visited)
+            else:
+                continue
 
+    visited.remove(node)
+
+for i in G['start']:
+    count(i)
+
+print(ans)
 print(G)
 print(len(G))
